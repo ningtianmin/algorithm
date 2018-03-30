@@ -73,4 +73,12 @@ class QuestionsTest {
         target = new char[]{'b', 'f', 'g', 'k'};
         Assertions.assertTrue(Questions.stringPathInMatrix(matrix, target));
     }
+
+    @Test
+    void cuttingRopeDp() {
+        Assertions.assertEquals(0, Questions.cuttingRope(1));
+        Assertions.assertEquals(1, Questions.cuttingRope(2));
+        Assertions.assertEquals(2, Questions.cuttingRope(3));
+        Assertions.assertEquals(18, Questions.cuttingRope(8));
+    }
 }

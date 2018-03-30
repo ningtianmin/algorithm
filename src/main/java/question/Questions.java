@@ -169,4 +169,29 @@ public class Questions {
         }
         return hasPath;
     }
+
+    public static int cuttingRope(int length) {
+        if (length < 2) {
+            return 0;
+        }
+        if (length == 2) {
+            return 1;
+        }
+        if (length == 3) {
+            return 2;
+        }
+        int[] dp = new int[length + 1];
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 3;
+        for (int currentLength = 4; currentLength <= length; currentLength++) {
+            int max = 0;
+            for (int i = 1, border = currentLength / 2; i <= border; i++) {
+                int temp = dp[i] * dp[currentLength - i];
+                max = max > temp ? max : temp;
+            }
+            dp[currentLength] = max;
+        }
+        return dp[length];
+    }
 }
