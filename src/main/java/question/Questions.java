@@ -118,4 +118,55 @@ public class Questions {
         }
         return cur;
     }
+
+    /**
+     * 矩阵中的路径
+     * 题目：请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有
+     * 字符的路径。路径可以从矩阵中任意一格开始，每一步可以在矩阵中向左、右、
+     * 上、下移动一格。如果一条路径经过了矩阵的某一格，那么该路径不能再次进入
+     * 该格子。例如在下面的3×4的矩阵中包含一条字符串“bfce”的路径（路径中的字
+     * 母用下划线标出）。但矩阵中不包含字符串“abfb”的路径，因为字符串的第一个
+     * 字符b占据了矩阵中的第一行第二个格子之后，路径不能再次进入这个格子。
+     *
+     * @param matrix 字符矩阵
+     * @param target 路径
+     */
+    public static boolean stringPathInMatrix(char[][] matrix, char[] target) {
+        if (matrix == null || target == null) {
+            return false;
+        }
+        int rowNum = matrix.length, columnNum = matrix[0].length;
+        boolean[][] visited = new boolean[rowNum][columnNum];
+        int[] nextIndex = {0};
+        for (int row = 0; row < rowNum; row++) {
+            for (int column = 0; column < columnNum; column++) {
+                if (stringPathInMatrixHasPath(matrix, visited, target, row, column, nextIndex)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private static boolean stringPathInMatrixHasPath(char[][] matrix, boolean[][] visited, char[] target, int currentRow, int currentColumn, int[] nextIndex) {
+        if (currentRow < 0 || currentRow >= matrix.length || currentColumn < 0 || currentColumn >= matrix[0].length) {
+            return false;
+        }
+        boolean hasPath = false;
+        if (!visited[currentRow][currentColumn] && matrix[currentRow][currentColumn] == target[nextIndex[0]]) {
+            visited[currentRow][currentColumn] = true;
+            if (++nextIndex[0] == target.length) {
+                return true;
+            }
+            hasPath = stringPathInMatrixHasPath(matrix, visited, target, currentRow, currentColumn + 1, nextIndex) ||
+                    stringPathInMatrixHasPath(matrix, visited, target, currentRow, currentColumn - 1, nextIndex) ||
+                    stringPathInMatrixHasPath(matrix, visited, target, currentRow + 1, currentColumn, nextIndex) ||
+                    stringPathInMatrixHasPath(matrix, visited, target, currentRow - 1, currentColumn, nextIndex);
+            if (!hasPath) {
+                nextIndex[0]--;
+                visited[currentRow][currentColumn] = false;
+            }
+        }
+        return hasPath;
+    }
 }

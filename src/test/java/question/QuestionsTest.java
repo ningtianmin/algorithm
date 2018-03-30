@@ -50,4 +50,27 @@ class QuestionsTest {
         Assertions.assertEquals(1, Questions.fibonacci(2));
         Assertions.assertEquals(2, Questions.fibonacci(3));
     }
+
+    @Test
+    void stringPathInMatrix() {
+        char[][] matrix;
+        char[] target;
+        matrix = null;
+        target = null;
+        Assertions.assertFalse(Questions.stringPathInMatrix(matrix, target));
+        matrix = new char[][]{{'a'}};
+        target = new char[]{'b'};
+        Assertions.assertFalse(Questions.stringPathInMatrix(matrix, target));
+        target = new char[]{'a'};
+        Assertions.assertTrue(Questions.stringPathInMatrix(matrix, target));
+        matrix = new char[][]{{'a', 'b', 'c', 'd'}, {'e', 'f', 'g', 'h'}, {'i', 'j', 'k', 'l'}};
+        target = new char[]{'A'};
+        Assertions.assertFalse(Questions.stringPathInMatrix(matrix, target));
+        target = new char[]{'f'};
+        Assertions.assertTrue(Questions.stringPathInMatrix(matrix, target));
+        target = new char[]{'a', 'b', 'c', 'd'};
+        Assertions.assertTrue(Questions.stringPathInMatrix(matrix, target));
+        target = new char[]{'b', 'f', 'g', 'k'};
+        Assertions.assertTrue(Questions.stringPathInMatrix(matrix, target));
+    }
 }
